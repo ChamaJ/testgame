@@ -3,36 +3,28 @@ let board = ["", "", "", "", "", "", "", "", ""];
 let gameActive = true;
 
 const statusText = document.getElementById("status");
-const boardDiv = document.getElementById("game-board");
-
-function createBoard() {
-  boardDiv.innerHTML = "";
-  board.forEach((cell, index) => {
-    const cellDiv = document.createElement("div");
-    cellDiv.classList.add("cell");
-    cellDiv.dataset.index = index;
-    cellDiv.innerText = cell;
-    cellDiv.addEventListener("click", handleClick);
-    boardDiv.appendChild(cellDiv);
-  });
-}
+const cells = document.querySelectorAll(".cell");
 
 function handleClick(e) {
   const index = e.target.dataset.index;
   if (!gameActive || board[index] !== "") return;
- board[index] = currentPlayer;
-  createBoard();
+
+  board[index] = currentPlayer;
+  e.target.innerText = currentPlayer;
+
   if (checkWinner()) {
     statusText.innerText = `Player ${currentPlayer} wins!`;
     gameActive = false;
     return;
-  } else if (board.every(cell => cell !== "")) {
+  }
+
+  if (board.every(cell => cell !== "")) {
     statusText.innerText = "It's a draw!";
     gameActive = false;
     return;
   }
 
-  currentPlayer = currentPlayer === "X" ? "Y" : "X";
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
   statusText.innerText = `Player ${currentPlayer}'s turn`;
 }
 
@@ -51,10 +43,15 @@ function checkWinner() {
 
 function restartGame() {
   board = ["", "", "", "", "", "", "", "", ""];
-  currentPlayer = "X";
   gameActive = true;
+  currentPlayer = "X";
   statusText.innerText = `Player ${currentPlayer}'s turn`;
-  createBoard();
+
+  cells.forEach(cell => {
+    cell.innerText = "";
+  });
 }
 
-createBoard();
+cells.forEach(cell => {
+  cell.addEventListener("click", handleClick);
+});

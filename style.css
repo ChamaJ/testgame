@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
   text-align: center;
   margin-top: 50px;
 }
@@ -15,14 +15,15 @@ body {
 .cell {
   width: 100px;
   height: 100px;
-  background: #eee;
+  background-color: #eee;
   font-size: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border: 2px solid #ccc;
 }
 
 .cell:hover {
-  background: #ddd;
+  background-color: #ddd;
 }
